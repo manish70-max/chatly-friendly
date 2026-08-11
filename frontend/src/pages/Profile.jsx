@@ -44,7 +44,7 @@ const Profile = () => {
       }
 
       const result = await axios.put(
-        "http://localhost:3000/api/user/profile",
+        "https://chatly-friendly.onrender.com/api/user/profile",
         formData,
         {
           withCredentials: true,
