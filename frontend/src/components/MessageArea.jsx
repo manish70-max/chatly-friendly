@@ -1,134 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { IoCallOutline, IoVideocamOutline } from "react-icons/io5";
-import { BiLogOutCircle } from "react-icons/bi";
-import dp from "../assets/user.png";
-
-import { useDispatch, useSelector } from "react-redux";
-import { setSelectedUser } from "../redux/userSlice";
-
-import { RiEmojiStickerLine, RiSendPlane2Fill } from "react-icons/ri";
-import { FaImages } from "react-icons/fa6";
-
-import EmojiPicker from "emoji-picker-react";
-import SenderMessage from "./SenderMessage";
-import ReceiverMessage from "./ReceiverMessage";
-
-import axios from "axios";
-import { setMessages, addMessage } from "../redux/messageSlice";
-import { socket } from "../socket/socket";
-
-const MessageArea = () => {
-  const dispatch = useDispatch();
-
-  const [showPicker, setShowPicker] = useState(false);
-  const [input, setInput] = useState("");
-  const [frontendImage, setFrontendImage] = useState(null);
-  const [backendImage, setBackendImage] = useState(null);
-
-  const image = useRef();
-
-  const { selectedUser, userData, onlineUser } = useSelector(
-    (state) => state.user,
-  );
-
-  const { messages } = useSelector((state) => state.message);
-
-  // ================= SEND MESSAGE =================
-
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-
-    if (input.trim().length === 0 && backendImage == null) {
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-
-      formData.append("message", input);
-
-      if (backendImage) {
-        formData.append("image", backendImage);
-      }
-
-      const result = await axios.post(
-        `https://chatly-friendly-backend.onrender.com/api/message/send/${selectedUser._id}`,
-        formData,
-        {
-          withCredentials: true,
-        },
-      );
-
-      console.log("New message:", result.data);
-
-      dispatch(setMessages([...(messages || []), result.data]));
-
-      setInput("");
-      setFrontendImage(null);
-      setBackendImage(null);
-      setShowPicker(false);
-    } catch (error) {
-      console.log(error);
-      console.log(error.response);
-      console.log(error.response?.data);
-    }
-  };
-
-  // ================= EMOJI =================
-
-  const onEmojiClick = (emojiData) => {
-    setInput((prevInput) => prevInput + emojiData.emoji);
-    setShowPicker(false);
-  };
-
-  // ================= IMAGE =================
-
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-
-    if (!file) return;
-
-    setBackendImage(file);
-    setFrontendImage(URL.createObjectURL(file));
-  };
-
-  // ================= SOCKET =================
-
-  useEffect(() => {
-    const handleNewMessage = (message) => {
-      console.log("🔥 RECEIVED:", message);
-
-      dispatch(addMessage(message));
-    };
-
-    socket.on("newMessage", handleNewMessage);
-
-    return () => {
-      socket.off("newMessage", handleNewMessage);
-    };
-  }, [dispatch]);
-
-  // ================= LOGOUT =================
-
-  const handleLogout = async () => {
-    try {
-      await axios.get("https://chatly-friendly-backend.onrender.com/api/auth/logout", {
-        withCredentials: true,
-      });
-
-      window.location.href = "/login";
-    } catch (error) {
-      console.log(error);
-    }
-  };
-import React, { useEffect, useRef, useState } from "react";
-
-import { IoIosArrowRoundBack } from "react-icons/io";
-import {
-  IoCallOutline,
-  IoVideocamOutline,
-} from "react-icons/io5";
 import { BiLogOutCircle } from "react-icons/bi";
 
 import dp from "../assets/user.png";
@@ -166,32 +39,18 @@ const MessageArea = () => {
   const [backendImage, setBackendImage] = useState(null);
 
   const image = useRef(null);
-  const messagesContainerRef = useRef(null);
 
-  const {
-    selectedUser,
-    userData,
-    onlineUser,
-  } = useSelector((state) => state.user);
+  const { selectedUser, userData, onlineUser } = useSelector(
+    (state) => state.user
+  );
 
   const { messages } = useSelector(
     (state) => state.message
   );
 
-  // =================================================
-  // AUTO SCROLL TO BOTTOM
-  // =================================================
-
-  useEffect(() => {
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight;
-    }
-  }, [messages]);
-
-  // =================================================
+  // =====================================================
   // SEND MESSAGE
-  // =================================================
+  // =====================================================
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -242,18 +101,15 @@ const MessageArea = () => {
         image.current.value = "";
       }
     } catch (error) {
-      console.log("Send message error:", error);
-      console.log("Response:", error.response);
-      console.log(
-        "Response data:",
-        error.response?.data
-      );
+      console.log(error);
+      console.log(error.response);
+      console.log(error.response?.data);
     }
   };
 
-  // =================================================
+  // =====================================================
   // EMOJI
-  // =================================================
+  // =====================================================
 
   const onEmojiClick = (emojiData) => {
     setInput(
@@ -264,9 +120,9 @@ const MessageArea = () => {
     setShowPicker(false);
   };
 
-  // =================================================
+  // =====================================================
   // IMAGE
-  // =================================================
+  // =====================================================
 
   const handleImage = (e) => {
     const file = e.target.files?.[0];
@@ -279,9 +135,9 @@ const MessageArea = () => {
     );
   };
 
-  // =================================================
+  // =====================================================
   // SOCKET
-  // =================================================
+  // =====================================================
 
   useEffect(() => {
     const handleNewMessage = (message) => {
@@ -303,9 +159,9 @@ const MessageArea = () => {
     };
   }, [dispatch]);
 
-  // =================================================
+  // =====================================================
   // LOGOUT
-  // =================================================
+  // =====================================================
 
   const handleLogout = async () => {
     try {
@@ -318,21 +174,13 @@ const MessageArea = () => {
 
       window.location.href = "/login";
     } catch (error) {
-      console.log("Logout error:", error);
+      console.log(error);
     }
   };
 
-  // =================================================
-  // CLEAR IMAGE URL
-  // =================================================
-
-  useEffect(() => {
-    return () => {
-      if (frontendImage) {
-        URL.revokeObjectURL(frontendImage);
-      }
-    };
-  }, [frontendImage]);
+  // =====================================================
+  // RETURN
+  // =====================================================
 
   return (
     <div
@@ -340,13 +188,17 @@ const MessageArea = () => {
         w-full
         lg:w-[70%]
         h-[100dvh]
-        min-h-0
+        max-h-[100dvh]
         bg-slate-200
         relative
         flex
         flex-col
         overflow-hidden
-        ${selectedUser ? "flex" : "hidden lg:flex"}
+        ${
+          selectedUser
+            ? "flex"
+            : "hidden lg:flex"
+        }
       `}
     >
 
@@ -430,6 +282,7 @@ const MessageArea = () => {
 
       {selectedUser && (
         <>
+
           {/* ================================================= */}
           {/* HEADER */}
           {/* ================================================= */}
@@ -454,7 +307,7 @@ const MessageArea = () => {
             "
           >
 
-            {/* MOBILE BACK */}
+            {/* MOBILE BACK BUTTON */}
 
             <button
               type="button"
@@ -482,7 +335,7 @@ const MessageArea = () => {
                 active:scale-95
                 transition-all
                 duration-200
-                mr-[8px]
+                mr-[10px]
               "
             >
               <IoIosArrowRoundBack
@@ -505,10 +358,14 @@ const MessageArea = () => {
               "
             >
 
-              {/* PROFILE */}
+              {/* PROFILE IMAGE */}
 
-              <div className="relative shrink-0">
-
+              <div
+                className="
+                  relative
+                  shrink-0
+                "
+              >
                 <div
                   className="
                     w-11
@@ -525,8 +382,7 @@ const MessageArea = () => {
                 >
                   <img
                     src={
-                      selectedUser?.image ||
-                      dp
+                      selectedUser?.image || dp
                     }
                     alt={
                       selectedUser?.name ||
@@ -559,14 +415,18 @@ const MessageArea = () => {
                       border-white
                       shadow-sm
                     "
-                  />
+                  ></span>
                 )}
               </div>
 
-              {/* NAME */}
+              {/* USER DETAILS */}
 
-              <div className="min-w-0 flex-1">
-
+              <div
+                className="
+                  min-w-0
+                  flex-1
+                "
+              >
                 <h1
                   className="
                     text-[15px]
@@ -577,8 +437,10 @@ const MessageArea = () => {
                     leading-tight
                   "
                 >
-                  {selectedUser?.name ||
-                    selectedUser?.userName}
+                  {
+                    selectedUser?.name ||
+                    selectedUser?.userName
+                  }
                 </h1>
 
                 <p
@@ -602,7 +464,6 @@ const MessageArea = () => {
                     ? "Online"
                     : "Offline"}
                 </p>
-
               </div>
             </div>
 
@@ -612,7 +473,7 @@ const MessageArea = () => {
               className="
                 flex
                 items-center
-                gap-[3px]
+                gap-[5px]
               "
             >
 
@@ -675,7 +536,6 @@ const MessageArea = () => {
               <button
                 type="button"
                 onClick={handleLogout}
-                title="Logout"
                 className="
                   hidden
                   lg:flex
@@ -690,6 +550,7 @@ const MessageArea = () => {
                   active:scale-95
                   transition
                 "
+                title="Logout"
               >
                 <BiLogOutCircle
                   className="
@@ -698,20 +559,19 @@ const MessageArea = () => {
                   "
                 />
               </button>
-
             </div>
           </div>
 
           {/* ================================================= */}
-          {/* MESSAGE AREA */}
+          {/* MESSAGE AREA - ONLY ONE */}
           {/* ================================================= */}
 
           <div
             className="
               flex-1
               min-h-0
-              relative
               overflow-hidden
+              relative
             "
           >
 
@@ -739,10 +599,9 @@ const MessageArea = () => {
               </div>
             )}
 
-            {/* MESSAGES */}
+            {/* MESSAGES SCROLL */}
 
             <div
-              ref={messagesContainerRef}
               className="
                 w-full
                 h-full
@@ -761,12 +620,10 @@ const MessageArea = () => {
             >
 
               {messages?.length > 0 ? (
-
                 messages.map((mess) => {
 
                   return mess.sender ===
                     userData?._id ? (
-
                     <SenderMessage
                       key={mess._id}
                       image={mess.image}
@@ -774,9 +631,7 @@ const MessageArea = () => {
                         mess.message
                       }
                     />
-
                   ) : (
-
                     <ReceiverMessage
                       key={mess._id}
                       image={mess.image}
@@ -784,10 +639,9 @@ const MessageArea = () => {
                         mess.message
                       }
                     />
-
                   );
-                })
 
+                })
               ) : (
 
                 <div
@@ -801,10 +655,8 @@ const MessageArea = () => {
                   <div
                     className="
                       text-center
-                      px-[20px]
                     "
                   >
-
                     <div
                       className="
                         text-[40px]
@@ -832,10 +684,11 @@ const MessageArea = () => {
                       "
                     >
                       Send a message to{" "}
-                      {selectedUser?.name ||
-                        selectedUser?.userName}
+                      {
+                        selectedUser?.name ||
+                        selectedUser?.userName
+                      }
                     </p>
-
                   </div>
                 </div>
 
@@ -854,17 +707,16 @@ const MessageArea = () => {
                 absolute
                 bottom-[90px]
                 right-[15px]
+                sm:right-[20px]
                 z-[60]
               "
             >
               <img
                 src={frontendImage}
-                alt="preview"
+                alt=""
                 className="
-                  w-[75px]
-                  h-[75px]
-                  sm:w-[80px]
-                  sm:h-[80px]
+                  w-[80px]
+                  h-[80px]
                   object-cover
                   rounded-xl
                   shadow-xl
@@ -876,7 +728,7 @@ const MessageArea = () => {
           )}
 
           {/* ================================================= */}
-          {/* MESSAGE INPUT */}
+          {/* MESSAGE INPUT - ONLY ONE */}
           {/* ================================================= */}
 
           <div
@@ -890,10 +742,9 @@ const MessageArea = () => {
               border-gray-200
               flex
               items-center
-              px-[6px]
+              px-[5px]
               sm:px-[20px]
               z-[50]
-              pb-[env(safe-area-inset-bottom)]
             "
           >
 
@@ -930,6 +781,7 @@ const MessageArea = () => {
                   text-gray-600
                   hover:bg-gray-100
                   hover:text-sky-500
+                  active:scale-95
                   transition
                 "
               >
@@ -957,12 +809,12 @@ const MessageArea = () => {
                 className="
                   flex-1
                   min-w-0
-                  h-[50px]
+                  h-[52px]
                   bg-gray-100
                   rounded-full
                   flex
                   items-center
-                  px-[12px]
+                  px-[10px]
                   sm:px-[15px]
                   border
                   border-transparent
@@ -987,12 +839,12 @@ const MessageArea = () => {
                     outline-none
                     border-none
                     text-gray-700
-                    text-[15px]
+                    text-[14px]
                     sm:text-[17px]
                   "
                 />
 
-                {/* IMAGE */}
+                {/* IMAGE BUTTON */}
 
                 <button
                   type="button"
@@ -1010,6 +862,7 @@ const MessageArea = () => {
                     text-gray-500
                     hover:bg-gray-200
                     hover:text-sky-500
+                    active:scale-95
                     transition
                   "
                 >
@@ -1020,19 +873,17 @@ const MessageArea = () => {
                     "
                   />
                 </button>
-
               </div>
 
-              {/* SEND */}
+              {/* SEND BUTTON */}
 
               {(input.trim().length > 0 ||
                 backendImage) && (
-
                 <button
                   type="submit"
                   className="
-                    w-[46px]
-                    h-[46px]
+                    w-[45px]
+                    h-[45px]
                     sm:w-[50px]
                     sm:h-[50px]
                     shrink-0
@@ -1050,24 +901,21 @@ const MessageArea = () => {
                 >
                   <RiSendPlane2Fill
                     className="
-                      w-[22px]
-                      h-[22px]
+                      w-[23px]
+                      h-[23px]
                     "
                   />
                 </button>
-
               )}
 
             </form>
           </div>
+
         </>
       )}
+
     </div>
   );
-};
-
-export default MessageArea;
-
 };
 
 export default MessageArea;
