@@ -14,7 +14,7 @@ const useCurrentUser = () => {
       try {
 
         const result = await axios.get(
-          "http://localhost:3000/api/user/current",
+          "https://chatly-friendly-backend.onrender.com/api/user/current",
           {
             withCredentials: true,
           }
