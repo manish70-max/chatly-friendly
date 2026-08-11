@@ -368,7 +368,7 @@ const MessageArea = () => {
 
           {/* ================= MESSAGE CONTAINER ================= */}
 
-          <div className="flex-1 min-h-0 relative">
+       <div className="flex-1 min-h-0 relative overflow-hidden">
             {/* EMOJI PICKER */}
 
             {showPicker && (
@@ -393,20 +393,21 @@ const MessageArea = () => {
 
             {/* MESSAGES */}
 
-            <div
-              className="
-                w-full
-                h-full
-                overflow-y-auto
-                px-[12px]
-                sm:px-[25px]
-                py-[20px]
-                flex
-                flex-col
-                gap-[15px]
-                bg-slate-100
-              "
-            >
+           <div
+  className="
+    w-full
+    h-full
+    overflow-y-auto
+    px-[12px]
+    sm:px-[25px]
+    py-[20px]
+    pb-[20px]
+    flex
+    flex-col
+    gap-[15px]
+    bg-slate-100
+  "
+>
               {messages?.length > 0 ? (
                 messages.map((mess) => {
                   return mess.sender === userData?._id ? (
@@ -463,31 +464,35 @@ const MessageArea = () => {
           )}
 
           {/* ================= MESSAGE INPUT ================= */}
-
-          <div
-            className="
-              w-full
-              h-[80px]
-              shrink-0
-              bg-white
-              border-t
-              border-gray-200
-              flex
-              items-center
-              px-[10px]
-              sm:px-[20px]
-            "
-          >
-            <form
-              onSubmit={handleSendMessage}
-              className="
-                w-full
-                flex
-                items-center
-                gap-[8px]
-              "
-            >
+<div
+  className="
+    w-full
+    min-h-[80px]
+    h-[80px]
+    shrink-0
+    bg-white
+    border-t
+    border-gray-200
+    flex
+    items-center
+    px-[8px]
+    sm:px-[20px]
+    pb-[env(safe-area-inset-bottom)]
+  "
+>
+         
+           
               {/* EMOJI */}
+  <form
+  onSubmit={handleSendMessage}
+  className="
+    w-full
+    flex
+    items-center
+    gap-[5px]
+    sm:gap-[8px]
+  "
+>
 
               <button
                 type="button"
