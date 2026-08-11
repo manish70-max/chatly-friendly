@@ -124,18 +124,19 @@ const MessageArea = () => {
   };
 
   return (
-    <div
-      className={`
-        w-full
-        lg:w-[70%]
-        h-full
-        bg-slate-200
-        relative
-        flex-col
-        overflow-hidden
-        ${selectedUser ? "flex" : "hidden lg:flex"}
-      `}
-    >
+  <div
+  className={`
+    w-full
+    lg:w-[70%]
+    h-[100dvh]
+    max-h-[100dvh]
+    bg-slate-200
+    relative
+    flex-col
+    overflow-hidden
+    ${selectedUser ? "flex" : "hidden lg:flex"}
+  `}
+>
       {/* ================================================= */}
       {/* NO USER SELECTED - DESKTOP ONLY */}
       {/* ================================================= */}
