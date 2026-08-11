@@ -17,31 +17,6 @@ const Login = () => {
   console.log("userdata",userData)
       const navigate = useNavigate()
 
-//       const handlelogin=async(e)=>{
-//             e.preventDefault();
-//             SetError("")
-//                   try {
-//     const result = await axios.post(
-//       "http://localhost:3000/api/auth/login",
-//       { email, password },
-//       { withCredentials: true }
-//     );
-
-//      dispatch(setUserData(result.data))
-//     //  dispatch(setUserData(null))
-//      navigate("/")
-//      Setemail("")
-//      Setpassword("")
-//      Setloading(false)
-//      SetError(" ")
-//     console.log(result.data);
-//   } catch (error) {
-//     console.log(error.response.data);
-//        Setloading(false)
-//       SetError(error.response.data.message) // 👈 Ye print karo
-//   }
-// };
-
 
 
 
