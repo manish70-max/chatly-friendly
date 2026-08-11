@@ -53,7 +53,7 @@ const MessageArea = () => {
       }
 
       const result = await axios.post(
-        `http://localhost:3000/api/message/send/${selectedUser._id}`,
+        `https://chatly-friendly-backend.onrender.com/api/message/send/${selectedUser._id}`,
         formData,
         {
           withCredentials: true,
