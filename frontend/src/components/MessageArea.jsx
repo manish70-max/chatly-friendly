@@ -367,81 +367,82 @@ const MessageArea = () => {
           </div>
 
           {/* ================= MESSAGE CONTAINER ================= */}
+          {/* ================= MESSAGE CONTAINER ================= */}
 
-       <div className="flex-1 min-h-0 relative overflow-hidden">
-            {/* EMOJI PICKER */}
+<div className="flex-1 min-h-0 relative overflow-hidden">
+  {showPicker && (
+    <div
+      className="
+        absolute
+        bottom-[10px]
+        left-[10px]
+        z-[100]
+        shadow-2xl
+        rounded-xl
+        overflow-hidden
+      "
+    >
+      <EmojiPicker
+        width={350}
+        height={450}
+        onEmojiClick={onEmojiClick}
+      />
+    </div>
+  )}
 
-            {showPicker && (
-              <div
-                className="
-                  absolute
-                  bottom-[15px]
-                  left-[15px]
-                  z-[100]
-                  shadow-2xl
-                  rounded-xl
-                  overflow-hidden
-                "
-              >
-                <EmojiPicker
-                  width={350}
-                  height={450}
-                  onEmojiClick={onEmojiClick}
-                />
-              </div>
-            )}
+  <div
+    className="
+      w-full
+      h-full
+      overflow-y-auto
+      overscroll-contain
+      px-[10px]
+      sm:px-[25px]
+      pt-[15px]
+      pb-[90px]
+      flex
+      flex-col
+      gap-[12px]
+      bg-slate-100
+      scroll-smooth
+    "
+  >
+    {messages?.length > 0 ? (
+      messages.map((mess) => {
+        return mess.sender === userData?._id ? (
+          <SenderMessage
+            key={mess._id}
+            image={mess.image}
+            message={mess.message}
+          />
+        ) : (
+          <ReceiverMessage
+            key={mess._id}
+            image={mess.image}
+            message={mess.message}
+          />
+        );
+      })
+    ) : (
+      <div className="flex-1 flex justify-center items-center">
+        <div className="text-center">
+          <div className="text-[40px] mb-[10px]">👋</div>
 
-            {/* MESSAGES */}
+          <h2 className="text-gray-600 font-semibold text-[18px]">
+            Start a conversation
+          </h2>
 
-           <div
-  className="
-    w-full
-    h-full
-    overflow-y-auto
-    px-[12px]
-    sm:px-[25px]
-    py-[20px]
-    pb-[20px]
-    flex
-    flex-col
-    gap-[15px]
-    bg-slate-100
-  "
->
-              {messages?.length > 0 ? (
-                messages.map((mess) => {
-                  return mess.sender === userData?._id ? (
-                    <SenderMessage
-                      key={mess._id}
-                      image={mess.image}
-                      message={mess.message}
-                    />
-                  ) : (
-                    <ReceiverMessage
-                      key={mess._id}
-                      image={mess.image}
-                      message={mess.message}
-                    />
-                  );
-                })
-              ) : (
-                <div className="flex-1 flex justify-center items-center">
-                  <div className="text-center">
-                    <div className="text-[40px] mb-[10px]">👋</div>
-
-                    <h2 className="text-gray-600 font-semibold text-[18px]">
-                      Start a conversation
-                    </h2>
-
-                    <p className="text-gray-400 text-[14px] mt-[5px]">
-                      Send a message to{" "}
-                      {selectedUser?.name || selectedUser?.userName}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          <p className="text-gray-400 text-[14px] mt-[5px]">
+            Send a message to{" "}
+            {selectedUser?.name || selectedUser?.userName}
+          </p>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+   
+      
 
           {/* ================= IMAGE PREVIEW ================= */}
 
@@ -464,150 +465,81 @@ const MessageArea = () => {
           )}
 
           {/* ================= MESSAGE INPUT ================= */}
-<div
-  className="
-    w-full
-    min-h-[80px]
-    h-[80px]
-    shrink-0
-    bg-white
-    border-t
-    border-gray-200
-    flex
-    items-center
-    px-[8px]
-    sm:px-[20px]
-    pb-[env(safe-area-inset-bottom)]
-  "
->
-         
-           
-              {/* EMOJI */}
-  <form
-  onSubmit={handleSendMessage}
-  className="
-    w-full
-    flex
-    items-center
-    gap-[5px]
-    sm:gap-[8px]
-  "
->
+          {/* ================= MESSAGE CONTAINER ================= */}
 
-              <button
-                type="button"
-                onClick={() => setShowPicker((prev) => !prev)}
-                className="
-                  w-[45px]
-                  h-[45px]
-                  shrink-0
-                  rounded-full
-                  flex
-                  items-center
-                  justify-center
-                  text-gray-600
-                  hover:bg-gray-100
-                  hover:text-sky-500
-                  transition
-                "
-              >
-                <RiEmojiStickerLine className="w-[24px] h-[24px]" />
-              </button>
+<div className="flex-1 min-h-0 relative overflow-hidden">
+  {showPicker && (
+    <div
+      className="
+        absolute
+        bottom-[10px]
+        left-[10px]
+        z-[100]
+        shadow-2xl
+        rounded-xl
+        overflow-hidden
+      "
+    >
+      <EmojiPicker
+        width={350}
+        height={450}
+        onEmojiClick={onEmojiClick}
+      />
+    </div>
+  )}
 
-              {/* FILE */}
+  <div
+    className="
+      w-full
+      h-full
+      overflow-y-auto
+      overscroll-contain
+      px-[10px]
+      sm:px-[25px]
+      pt-[15px]
+      pb-[90px]
+      flex
+      flex-col
+      gap-[12px]
+      bg-slate-100
+      scroll-smooth
+    "
+  >
+    {messages?.length > 0 ? (
+      messages.map((mess) => {
+        return mess.sender === userData?._id ? (
+          <SenderMessage
+            key={mess._id}
+            image={mess.image}
+            message={mess.message}
+          />
+        ) : (
+          <ReceiverMessage
+            key={mess._id}
+            image={mess.image}
+            message={mess.message}
+          />
+        );
+      })
+    ) : (
+      <div className="flex-1 flex justify-center items-center">
+        <div className="text-center">
+          <div className="text-[40px] mb-[10px]">👋</div>
 
-              <input
-                type="file"
-                ref={image}
-                accept="image/*"
-                hidden
-                onChange={handleImage}
-              />
+          <h2 className="text-gray-600 font-semibold text-[18px]">
+            Start a conversation
+          </h2>
 
-              {/* INPUT */}
+          <p className="text-gray-400 text-[14px] mt-[5px]">
+            Send a message to{" "}
+            {selectedUser?.name || selectedUser?.userName}
+          </p>
+        </div>
+      </div>
+    )}
+  </div>
+</div>
 
-              <div
-                className="
-                  flex-1
-                  h-[52px]
-                  bg-gray-100
-                  rounded-full
-                  flex
-                  items-center
-                  px-[15px]
-                  border
-                  border-transparent
-                  focus-within:border-sky-300
-                  focus-within:bg-white
-                  transition
-                "
-              >
-                <input
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  type="text"
-                  placeholder="Type a message..."
-                  className="
-                    w-full
-                    h-full
-                    bg-transparent
-                    outline-none
-                    border-none
-                    text-gray-700
-                    text-[15px]
-                    sm:text-[17px]
-                  "
-                />
-
-                {/* IMAGE BUTTON */}
-
-                <button
-                  type="button"
-                  onClick={() => image.current?.click()}
-                  className="
-                    w-[40px]
-                    h-[40px]
-                    shrink-0
-                    rounded-full
-                    flex
-                    items-center
-                    justify-center
-                    text-gray-500
-                    hover:bg-gray-200
-                    hover:text-sky-500
-                    transition
-                  "
-                >
-                  <FaImages className="w-[21px] h-[21px]" />
-                </button>
-              </div>
-
-              {/* SEND */}
-
-              {(input.trim().length > 0 || backendImage) && (
-                <button
-                  type="submit"
-                  className="
-                    w-[50px]
-                    h-[50px]
-                    shrink-0
-                    rounded-full
-                    bg-sky-500
-                    flex
-                    items-center
-                    justify-center
-                    text-white
-                    shadow-md
-                    hover:bg-sky-600
-                    active:scale-95
-                    transition-all
-                  "
-                >
-                  <RiSendPlane2Fill className="w-[24px] h-[24px]" />
-                </button>
-              )}
-            </form>
-          </div>
         </>
       )}
     </div>
