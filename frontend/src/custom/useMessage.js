@@ -13,7 +13,7 @@ const useMessages = () => {
     const fetchMessage = async () => {
       try {
         const result = await axios.get(
-          `http://localhost:3000/api/message/get/${selectedUser._id}`,
+          `https://chatly-friendly-backend.onrender.com/api/message/get/${selectedUser._id}`,
           {
             withCredentials: true,
           }
