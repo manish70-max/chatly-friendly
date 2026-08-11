@@ -113,7 +113,7 @@ const MessageArea = () => {
 
   const handleLogout = async () => {
     try {
-      await axios.get("http://localhost:3000/api/auth/logout", {
+      await axios.get("https://chatly-friendly-backend.onrender.com/api/auth/logout", {
         withCredentials: true,
       });
 
