@@ -30,7 +30,7 @@ const handlelogin = async (e) => {
 
   try {
     const result = await axios.post(
-      "https://chatly-friendly.onrender.com/api/auth/login",
+      "https://chatly-friendly-backend.onrender.com/api/auth/login",
       { email, password },
       { withCredentials: true }
     );
