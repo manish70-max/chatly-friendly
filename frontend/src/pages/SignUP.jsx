@@ -55,7 +55,7 @@ const SignUP = () => {
 
   try {
     const result = await axios.post(
-      "/api/auth/signup",
+      "https://chatly-friendly-backend.onrender.com/api/auth/signup",
       {
         userName,
         email,
