@@ -12,10 +12,15 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 // const  app = express();
 
-app.use(cors({
-    origin:"https://chatly-friendly.onrender.com",
-    credentials:true
-}))
+
+
+app.use(
+  cors({
+    origin: "https://chatly-friendly.onrender.com",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  })
+);
 app.use(express.json())
 
 app.use(cookieParser())
