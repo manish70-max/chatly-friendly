@@ -224,213 +224,143 @@ return (
       <>
         {/* ================= HEADER ================= */}
 
+     
+
+
+
+
         <div
+  className="
+    w-full
+    h-[75px]
+    min-h-[75px]
+    max-h-[75px]
+    shrink-0
+    flex-none
+    bg-white
+    border-b
+    border-gray-200
+    shadow-sm
+    flex
+    items-center
+    px-[10px]
+    sm:px-[20px]
+    relative
+    z-[100]
+  "
+>
+  {/* MOBILE BACK BUTTON */}
+  <button
+    type="button"
+    onClick={() => {
+      dispatch(setSelectedUser(null));
+      setShowPicker(false);
+    }}
+    className="
+      lg:hidden
+      w-[42px]
+      h-[42px]
+      shrink-0
+      rounded-full
+      bg-gray-100
+      shadow-md
+      flex
+      items-center
+      justify-center
+      text-gray-700
+      active:scale-95
+      transition
+      mr-[10px]
+    "
+  >
+    <IoIosArrowRoundBack className="w-[30px] h-[30px]" />
+  </button>
+
+  {/* USER INFO */}
+  <div className="flex items-center gap-3 min-w-0 flex-1">
+    <div className="relative shrink-0">
+      <div
+        className="
+          w-[45px]
+          h-[45px]
+          sm:w-[48px]
+          sm:h-[48px]
+          rounded-full
+          overflow-hidden
+          border-2
+          border-white
+          shadow-md
+          bg-gray-100
+        "
+      >
+        <img
+          src={selectedUser?.image || dp}
+          alt="profile"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {onlineUser?.includes(selectedUser?._id) && (
+        <span
           className="
-            w-full
-            h-[75px]
-            min-h-[75px]
-            shrink-0
-            bg-white
-            border-b
-            border-gray-200
-            shadow-sm
-            flex
-            items-center
-            px-[10px]
-            sm:px-[20px]
-            relative
-            z-[50]
+            absolute
+            bottom-0
+            right-0
+            w-[13px]
+            h-[13px]
+            rounded-full
+            bg-[#3aff20]
+            border-2
+            border-white
           "
-        >
-          {/* MOBILE BACK */}
+        />
+      )}
+    </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              dispatch(setSelectedUser(null));
-              setShowPicker(false);
-            }}
-            className="
-              lg:hidden
-              w-[42px]
-              h-[42px]
-              shrink-0
-              rounded-full
-              bg-gray-100
-              shadow-md
-              flex
-              items-center
-              justify-center
-              text-gray-700
-              hover:bg-sky-50
-              hover:text-sky-500
-              active:scale-95
-              transition-all
-              duration-200
-              mr-[10px]
-            "
-          >
-            <IoIosArrowRoundBack className="w-[30px] h-[30px]" />
-          </button>
+    <div className="min-w-0">
+      <h1 className="text-[16px] sm:text-[18px] font-semibold text-gray-800 truncate">
+        {selectedUser?.name || selectedUser?.userName}
+      </h1>
 
-          {/* USER INFO */}
+      <p
+        className={`text-[12px] font-medium ${
+          onlineUser?.includes(selectedUser?._id)
+            ? "text-green-500"
+            : "text-gray-400"
+        }`}
+      >
+        {onlineUser?.includes(selectedUser?._id)
+          ? "Online"
+          : "Offline"}
+      </p>
+    </div>
+  </div>
 
-          <div className="flex items-center gap-3 min-w-0 flex-1">
-            {/* PROFILE */}
+  {/* DESKTOP BUTTONS */}
+  <div className="hidden lg:flex items-center gap-1">
+    <button
+      type="button"
+      className="w-[42px] h-[42px] rounded-full flex items-center justify-center hover:bg-green-50"
+    >
+      <IoCallOutline className="w-[22px] h-[22px]" />
+    </button>
 
-            <div className="relative shrink-0">
-              <div
-                className="
-                  w-11
-                  h-11
-                  sm:w-12
-                  sm:h-12
-                  rounded-full
-                  overflow-hidden
-                  border-2
-                  border-white
-                  shadow-md
-                  bg-gray-100
-                "
-              >
-                <img
-                  src={selectedUser?.image || dp}
-                  alt={
-                    selectedUser?.name ||
-                    selectedUser?.userName ||
-                    "profile"
-                  }
-                  className="w-full h-full object-cover"
-                />
-              </div>
+    <button
+      type="button"
+      className="w-[42px] h-[42px] rounded-full flex items-center justify-center hover:bg-sky-50"
+    >
+      <IoVideocamOutline className="w-[22px] h-[22px]" />
+    </button>
 
-              {/* ONLINE */}
-
-              {onlineUser?.includes(selectedUser?._id) && (
-                <span
-                  className="
-                    absolute
-                    bottom-0
-                    right-0
-                    w-3.5
-                    h-3.5
-                    rounded-full
-                    bg-[#3aff20]
-                    border-2
-                    border-white
-                    shadow-sm
-                  "
-                />
-              )}
-            </div>
-
-            {/* NAME */}
-
-            <div className="min-w-0 flex-1">
-              <h1
-                className="
-                  text-[15px]
-                  sm:text-[17px]
-                  font-semibold
-                  text-gray-800
-                  truncate
-                "
-              >
-                {selectedUser?.name || selectedUser?.userName}
-              </h1>
-
-              <p
-                className={`
-                  text-[11px]
-                  sm:text-[12px]
-                  font-medium
-                  mt-[2px]
-                  ${
-                    onlineUser?.includes(selectedUser?._id)
-                      ? "text-green-500"
-                      : "text-gray-400"
-                  }
-                `}
-              >
-                {onlineUser?.includes(selectedUser?._id)
-                  ? "Online"
-                  : "Offline"}
-              </p>
-            </div>
-          </div>
-
-          {/* DESKTOP BUTTONS */}
-
-          <div className="flex items-center gap-[3px]">
-            {/* AUDIO */}
-
-            <button
-              type="button"
-              className="
-                hidden
-                lg:flex
-                w-[42px]
-                h-[42px]
-                rounded-full
-                items-center
-                justify-center
-                text-gray-600
-                hover:bg-green-50
-                hover:text-green-500
-                active:scale-95
-                transition
-              "
-            >
-              <IoCallOutline className="w-[22px] h-[22px]" />
-            </button>
-
-            {/* VIDEO */}
-
-            <button
-              type="button"
-              className="
-                hidden
-                lg:flex
-                w-[42px]
-                h-[42px]
-                rounded-full
-                items-center
-                justify-center
-                text-gray-600
-                hover:bg-sky-50
-                hover:text-sky-500
-                active:scale-95
-                transition
-              "
-            >
-              <IoVideocamOutline className="w-[22px] h-[22px]" />
-            </button>
-
-            {/* LOGOUT */}
-
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="
-                hidden
-                lg:flex
-                w-[42px]
-                h-[42px]
-                rounded-full
-                items-center
-                justify-center
-                text-gray-600
-                hover:bg-red-50
-                hover:text-red-500
-                active:scale-95
-                transition
-              "
-              title="Logout"
-            >
-              <BiLogOutCircle className="w-[24px] h-[24px]" />
-            </button>
-          </div>
-        </div>
+    <button
+      type="button"
+      onClick={handleLogout}
+      className="w-[42px] h-[42px] rounded-full flex items-center justify-center hover:bg-red-50 hover:text-red-500"
+    >
+      <BiLogOutCircle className="w-[24px] h-[24px]" />
+    </button>
+  </div>
+</div>
 
         {/* ================= MESSAGE AREA ================= */}
 
