@@ -364,85 +364,62 @@ return (
 
         {/* ================= MESSAGE AREA ================= */}
 
-        <div className="flex-1 min-h-0 relative overflow-hidden">
+        
+          <div className="flex-1 min-h-0 overflow-hidden relative">
           {/* EMOJI PICKER */}
 
           {showPicker && (
-            <div
-              className="
-                absolute
-                bottom-[10px]
-                left-[10px]
-                z-[100]
-                shadow-2xl
-                rounded-xl
-                overflow-hidden
-              "
-            >
-              <EmojiPicker
-                width={350}
-                height={450}
-                onEmojiClick={onEmojiClick}
-              />
-            </div>
-          )}
+          
+  <div
+    className="
+      w-full
+      h-full
+      overflow-y-auto
+      overscroll-contain
+      px-[10px]
+      sm:px-[25px]
+      pt-[15px]
+      pb-[15px]
+      flex
+      flex-col
+      gap-[12px]
+      bg-slate-100
+    "
+  >
+    {messages?.length > 0 ? (
+      messages.map((mess) =>
+        mess.sender === userData?._id ? (
+          <SenderMessage
+            key={mess._id}
+            image={mess.image}
+            message={mess.message}
+          />
+        ) : (
+          <ReceiverMessage
+            key={mess._id}
+            image={mess.image}
+            message={mess.message}
+          />
+        )
+      )
+    ) : (
+      <div className="flex-1 flex justify-center items-center">
+        <div className="text-center">
+          <div className="text-[40px]">👋</div>
 
-          {/* SCROLLABLE MESSAGES */}
+          <h2 className="text-gray-600 font-semibold text-[18px]">
+            Start a conversation
+          </h2>
 
-          <div
-            className="
-              w-full
-              h-full
-              overflow-y-auto
-              overscroll-contain
-              px-[10px]
-              sm:px-[25px]
-              pt-[15px]
-              pb-[15px]
-              flex
-              flex-col
-              gap-[12px]
-              bg-slate-100
-              scroll-smooth
-            "
-          >
-            {messages?.length > 0 ? (
-              messages.map((mess) => {
-                return mess.sender === userData?._id ? (
-                  <SenderMessage
-                    key={mess._id}
-                    image={mess.image}
-                    message={mess.message}
-                  />
-                ) : (
-                  <ReceiverMessage
-                    key={mess._id}
-                    image={mess.image}
-                    message={mess.message}
-                  />
-                );
-              })
-            ) : (
-              <div className="flex-1 flex justify-center items-center">
-                <div className="text-center">
-                  <div className="text-[40px] mb-[10px]">
-                    👋
-                  </div>
-
-                  <h2 className="text-gray-600 font-semibold text-[18px]">
-                    Start a conversation
-                  </h2>
-
-                  <p className="text-gray-400 text-[14px] mt-[5px]">
-                    Send a message to{" "}
-                    {selectedUser?.name ||
-                      selectedUser?.userName}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
+          <p className="text-gray-400 text-[14px] mt-1">
+            Send a message to{" "}
+            {selectedUser?.name || selectedUser?.userName}
+          </p>
         </div>
+      </div>
+    )}
+  </div>
+</div>
 
         {/* ================= IMAGE PREVIEW ================= */}
 
