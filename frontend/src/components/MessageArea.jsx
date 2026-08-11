@@ -124,14 +124,15 @@ const MessageArea = () => {
   };
 
   return (
-  <div
+
+    <div
   className={`
     w-full
     lg:w-[70%]
     h-[100dvh]
-    max-h-[100dvh]
     bg-slate-200
     relative
+    flex
     flex-col
     overflow-hidden
     ${selectedUser ? "flex" : "hidden lg:flex"}
@@ -168,24 +169,26 @@ const MessageArea = () => {
       {selectedUser && (
         <>
           {/* ================= HEADER ================= */}
-
-          <div
-            className="
-              w-full
-              h-[75px]
-              shrink-0
-              bg-white
-              border-b
-              border-gray-200
-              shadow-sm
-              flex
-              items-center
-              justify-between
-              px-[15px]
-              sm:px-[20px]
-              relative
-            "
-          >
+        <div
+  className="
+    w-full
+    h-[75px]
+    min-h-[75px]
+    shrink-0
+    bg-white
+    border-b
+    border-gray-200
+    shadow-sm
+    flex
+    items-center
+    justify-between
+    px-[15px]
+    sm:px-[20px]
+    relative
+    z-[50]
+  "
+>
+        
             {/* MOBILE BACK BUTTON */}
 
             <button
@@ -369,7 +372,8 @@ const MessageArea = () => {
           {/* ================= MESSAGE CONTAINER ================= */}
           {/* ================= MESSAGE CONTAINER ================= */}
 
-<div className="flex-1 min-h-0 relative overflow-hidden">
+
+  <div className="flex-1 min-h-0 overflow-hidden relative">
   {showPicker && (
     <div
       className="
@@ -389,8 +393,7 @@ const MessageArea = () => {
       />
     </div>
   )}
-
-  <div
+<div
     className="
       w-full
       h-full
@@ -399,12 +402,11 @@ const MessageArea = () => {
       px-[10px]
       sm:px-[25px]
       pt-[15px]
-      pb-[90px]
+      pb-[20px]
       flex
       flex-col
       gap-[12px]
       bg-slate-100
-      scroll-smooth
     "
   >
     {messages?.length > 0 ? (
@@ -441,7 +443,7 @@ const MessageArea = () => {
     )}
   </div>
 </div>
-   
+
       
 
           {/* ================= IMAGE PREVIEW ================= */}
@@ -465,9 +467,25 @@ const MessageArea = () => {
           )}
 
           {/* ================= MESSAGE INPUT ================= */}
+          
           {/* ================= MESSAGE CONTAINER ================= */}
 
-<div className="flex-1 min-h-0 relative overflow-hidden">
+<div
+  className="
+    w-full
+    h-[80px]
+    min-h-[80px]
+    shrink-0
+    bg-white
+    border-t
+    border-gray-200
+    flex
+    items-center
+    px-[6px]
+    sm:px-[20px]
+    z-[50]
+  "
+>
   {showPicker && (
     <div
       className="
