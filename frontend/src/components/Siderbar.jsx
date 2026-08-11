@@ -32,7 +32,7 @@ const Siderbar = () => {
 
   const handleLogout = async () => {
     try {
-      const result = await axios.get("http://localhost:3000/api/auth/logout", {
+      const result = await axios.get("https://chatly-friendly-backend.onrender.com/api/auth/logout", {
         withCredentials: true,
       });
 
@@ -47,7 +47,7 @@ const Siderbar = () => {
   const handlesearch = async () => {
     try {
       const result = await axios.get(
-        `http://localhost:3000/api/user/search?query=${input}`,
+        `https://chatly-friendly-backend.onrender.com/api/user/search?query=${input}`,
         {
           withCredentials: true,
         },
