@@ -181,741 +181,533 @@ const MessageArea = () => {
   // =====================================================
   // RETURN
   // =====================================================
+return (
+  <div
+    className={`
+      w-full
+      lg:w-[70%]
+      h-[100dvh]
+      max-h-[100dvh]
+      bg-slate-200
+      relative
+      flex
+      flex-col
+      overflow-hidden
+      ${selectedUser ? "flex" : "hidden lg:flex"}
+    `}
+  >
+    {/* ================= NO USER SELECTED ================= */}
 
-  return (
-    <div
-      className={`
-        w-full
-        lg:w-[70%]
-        h-[100dvh]
-        max-h-[100dvh]
-        bg-slate-200
-        relative
-        flex
-        flex-col
-        overflow-hidden
-        ${
-          selectedUser
-            ? "flex"
-            : "hidden lg:flex"
-        }
-      `}
-    >
+    {!selectedUser && (
+      <div className="hidden lg:flex w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex-col justify-center items-center">
+        <div className="w-[90px] h-[90px] rounded-full bg-[#20c7ff] flex items-center justify-center shadow-lg mb-[25px]">
+          <RiSendPlane2Fill className="w-[45px] h-[45px] text-white" />
+        </div>
 
-      {/* ================================================= */}
-      {/* NO USER SELECTED - DESKTOP */}
-      {/* ================================================= */}
+        <h1 className="text-[45px] font-bold text-gray-700">
+          Welcome to Chatly
+        </h1>
 
-      {!selectedUser && (
+        <p className="mt-[10px] text-[25px] font-semibold text-gray-500">
+          Chat Friendly! 💬
+        </p>
+
+        <p className="mt-[8px] text-[15px] text-gray-400">
+          Select a user and start chatting
+        </p>
+      </div>
+    )}
+
+    {/* ================= SELECTED USER ================= */}
+
+    {selectedUser && (
+      <>
+        {/* ================= HEADER ================= */}
+
         <div
           className="
-            hidden
-            lg:flex
             w-full
-            h-full
-            bg-gradient-to-br
-            from-slate-100
-            to-slate-200
-            flex-col
-            justify-center
+            h-[75px]
+            min-h-[75px]
+            shrink-0
+            bg-white
+            border-b
+            border-gray-200
+            shadow-sm
+            flex
             items-center
+            px-[10px]
+            sm:px-[20px]
+            relative
+            z-[50]
           "
         >
-          <div
+          {/* MOBILE BACK */}
+
+          <button
+            type="button"
+            onClick={() => {
+              dispatch(setSelectedUser(null));
+              setShowPicker(false);
+            }}
             className="
-              w-[90px]
-              h-[90px]
+              lg:hidden
+              w-[42px]
+              h-[42px]
+              shrink-0
               rounded-full
-              bg-[#20c7ff]
+              bg-gray-100
+              shadow-md
               flex
               items-center
               justify-center
-              shadow-lg
-              mb-[25px]
+              text-gray-700
+              hover:bg-sky-50
+              hover:text-sky-500
+              active:scale-95
+              transition-all
+              duration-200
+              mr-[10px]
             "
           >
-            <RiSendPlane2Fill
-              className="
-                w-[45px]
-                h-[45px]
-                text-white
-              "
-            />
+            <IoIosArrowRoundBack className="w-[30px] h-[30px]" />
+          </button>
+
+          {/* USER INFO */}
+
+          <div className="flex items-center gap-3 min-w-0 flex-1">
+            {/* PROFILE */}
+
+            <div className="relative shrink-0">
+              <div
+                className="
+                  w-11
+                  h-11
+                  sm:w-12
+                  sm:h-12
+                  rounded-full
+                  overflow-hidden
+                  border-2
+                  border-white
+                  shadow-md
+                  bg-gray-100
+                "
+              >
+                <img
+                  src={selectedUser?.image || dp}
+                  alt={
+                    selectedUser?.name ||
+                    selectedUser?.userName ||
+                    "profile"
+                  }
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* ONLINE */}
+
+              {onlineUser?.includes(selectedUser?._id) && (
+                <span
+                  className="
+                    absolute
+                    bottom-0
+                    right-0
+                    w-3.5
+                    h-3.5
+                    rounded-full
+                    bg-[#3aff20]
+                    border-2
+                    border-white
+                    shadow-sm
+                  "
+                />
+              )}
+            </div>
+
+            {/* NAME */}
+
+            <div className="min-w-0 flex-1">
+              <h1
+                className="
+                  text-[15px]
+                  sm:text-[17px]
+                  font-semibold
+                  text-gray-800
+                  truncate
+                "
+              >
+                {selectedUser?.name || selectedUser?.userName}
+              </h1>
+
+              <p
+                className={`
+                  text-[11px]
+                  sm:text-[12px]
+                  font-medium
+                  mt-[2px]
+                  ${
+                    onlineUser?.includes(selectedUser?._id)
+                      ? "text-green-500"
+                      : "text-gray-400"
+                  }
+                `}
+              >
+                {onlineUser?.includes(selectedUser?._id)
+                  ? "Online"
+                  : "Offline"}
+              </p>
+            </div>
           </div>
 
-          <h1
-            className="
-              text-[45px]
-              font-bold
-              text-gray-700
-            "
-          >
-            Welcome to Chatly
-          </h1>
+          {/* DESKTOP BUTTONS */}
 
-          <p
-            className="
-              mt-[10px]
-              text-[25px]
-              font-semibold
-              text-gray-500
-            "
-          >
-            Chat Friendly! 💬
-          </p>
-
-          <p
-            className="
-              mt-[8px]
-              text-[15px]
-              text-gray-400
-            "
-          >
-            Select a user and start chatting
-          </p>
-        </div>
-      )}
-
-      {/* ================================================= */}
-      {/* CHAT AREA */}
-      {/* ================================================= */}
-
-      {selectedUser && (
-        <>
-
-          {/* ================================================= */}
-          {/* HEADER */}
-          {/* ================================================= */}
-
-          <div
-            className="
-              w-full
-              h-[75px]
-              min-h-[75px]
-              shrink-0
-              bg-white
-              border-b
-              border-gray-200
-              shadow-sm
-              flex
-              items-center
-              justify-between
-              px-[10px]
-              sm:px-[20px]
-              relative
-              z-[50]
-            "
-          >
-
-            {/* MOBILE BACK BUTTON */}
+          <div className="flex items-center gap-[3px]">
+            {/* AUDIO */}
 
             <button
               type="button"
-              onClick={() => {
-                dispatch(
-                  setSelectedUser(null)
-                );
-
-                setShowPicker(false);
-              }}
               className="
-                lg:hidden
+                hidden
+                lg:flex
                 w-[42px]
                 h-[42px]
-                shrink-0
                 rounded-full
-                bg-gray-100
-                shadow-md
-                flex
                 items-center
                 justify-center
-                text-gray-700
+                text-gray-600
+                hover:bg-green-50
+                hover:text-green-500
+                active:scale-95
+                transition
+              "
+            >
+              <IoCallOutline className="w-[22px] h-[22px]" />
+            </button>
+
+            {/* VIDEO */}
+
+            <button
+              type="button"
+              className="
+                hidden
+                lg:flex
+                w-[42px]
+                h-[42px]
+                rounded-full
+                items-center
+                justify-center
+                text-gray-600
                 hover:bg-sky-50
                 hover:text-sky-500
                 active:scale-95
-                transition-all
-                duration-200
-                mr-[10px]
+                transition
               "
             >
-              <IoIosArrowRoundBack
-                className="
-                  w-[30px]
-                  h-[30px]
-                "
-              />
+              <IoVideocamOutline className="w-[22px] h-[22px]" />
             </button>
 
-            {/* USER INFO */}
+            {/* LOGOUT */}
 
-            <div
+            <button
+              type="button"
+              onClick={handleLogout}
               className="
-                flex
+                hidden
+                lg:flex
+                w-[42px]
+                h-[42px]
+                rounded-full
                 items-center
-                gap-3
-                min-w-0
-                flex-1
+                justify-center
+                text-gray-600
+                hover:bg-red-50
+                hover:text-red-500
+                active:scale-95
+                transition
               "
+              title="Logout"
             >
-
-              {/* PROFILE IMAGE */}
-
-              <div
-                className="
-                  relative
-                  shrink-0
-                "
-              >
-                <div
-                  className="
-                    w-11
-                    h-11
-                    sm:w-12
-                    sm:h-12
-                    rounded-full
-                    overflow-hidden
-                    border-2
-                    border-white
-                    shadow-md
-                    bg-gray-100
-                  "
-                >
-                  <img
-                    src={
-                      selectedUser?.image || dp
-                    }
-                    alt={
-                      selectedUser?.name ||
-                      selectedUser?.userName ||
-                      "profile"
-                    }
-                    className="
-                      w-full
-                      h-full
-                      object-cover
-                    "
-                  />
-                </div>
-
-                {/* ONLINE */}
-
-                {onlineUser?.includes(
-                  selectedUser?._id
-                ) && (
-                  <span
-                    className="
-                      absolute
-                      bottom-0
-                      right-0
-                      w-3.5
-                      h-3.5
-                      rounded-full
-                      bg-[#3aff20]
-                      border-2
-                      border-white
-                      shadow-sm
-                    "
-                  ></span>
-                )}
-              </div>
-
-              {/* USER DETAILS */}
-
-              <div
-                className="
-                  min-w-0
-                  flex-1
-                "
-              >
-                <h1
-                  className="
-                    text-[15px]
-                    sm:text-[17px]
-                    font-semibold
-                    text-gray-800
-                    truncate
-                    leading-tight
-                  "
-                >
-                  {
-                    selectedUser?.name ||
-                    selectedUser?.userName
-                  }
-                </h1>
-
-                <p
-                  className={`
-                    text-[11px]
-                    sm:text-[12px]
-                    font-medium
-                    mt-1
-                    ${
-                      onlineUser?.includes(
-                        selectedUser?._id
-                      )
-                        ? "text-green-500"
-                        : "text-gray-400"
-                    }
-                  `}
-                >
-                  {onlineUser?.includes(
-                    selectedUser?._id
-                  )
-                    ? "Online"
-                    : "Offline"}
-                </p>
-              </div>
-            </div>
-
-            {/* DESKTOP BUTTONS */}
-
-            <div
-              className="
-                flex
-                items-center
-                gap-[5px]
-              "
-            >
-
-              {/* AUDIO */}
-
-              <button
-                type="button"
-                className="
-                  hidden
-                  lg:flex
-                  w-[42px]
-                  h-[42px]
-                  rounded-full
-                  items-center
-                  justify-center
-                  text-gray-600
-                  hover:bg-green-50
-                  hover:text-green-500
-                  active:scale-95
-                  transition
-                "
-              >
-                <IoCallOutline
-                  className="
-                    w-[22px]
-                    h-[22px]
-                  "
-                />
-              </button>
-
-              {/* VIDEO */}
-
-              <button
-                type="button"
-                className="
-                  hidden
-                  lg:flex
-                  w-[42px]
-                  h-[42px]
-                  rounded-full
-                  items-center
-                  justify-center
-                  text-gray-600
-                  hover:bg-sky-50
-                  hover:text-sky-500
-                  active:scale-95
-                  transition
-                "
-              >
-                <IoVideocamOutline
-                  className="
-                    w-[22px]
-                    h-[22px]
-                  "
-                />
-              </button>
-
-              {/* LOGOUT */}
-
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="
-                  hidden
-                  lg:flex
-                  w-[42px]
-                  h-[42px]
-                  rounded-full
-                  items-center
-                  justify-center
-                  text-gray-600
-                  hover:bg-red-50
-                  hover:text-red-500
-                  active:scale-95
-                  transition
-                "
-                title="Logout"
-              >
-                <BiLogOutCircle
-                  className="
-                    w-[24px]
-                    h-[24px]
-                  "
-                />
-              </button>
-            </div>
+              <BiLogOutCircle className="w-[24px] h-[24px]" />
+            </button>
           </div>
+        </div>
 
-          {/* ================================================= */}
-          {/* MESSAGE AREA - ONLY ONE */}
-          {/* ================================================= */}
+        {/* ================= MESSAGE AREA ================= */}
 
-          <div
-            className="
-              flex-1
-              min-h-0
-              overflow-hidden
-              relative
-            "
-          >
+        <div className="flex-1 min-h-0 relative overflow-hidden">
+          {/* EMOJI PICKER */}
 
-            {/* EMOJI PICKER */}
-
-            {showPicker && (
-              <div
-                className="
-                  absolute
-                  bottom-[10px]
-                  left-[10px]
-                  z-[100]
-                  shadow-2xl
-                  rounded-xl
-                  overflow-hidden
-                "
-              >
-                <EmojiPicker
-                  width={350}
-                  height={450}
-                  onEmojiClick={
-                    onEmojiClick
-                  }
-                />
-              </div>
-            )}
-
-            {/* MESSAGES SCROLL */}
-
-            <div
-              className="
-                w-full
-                h-full
-                overflow-y-auto
-                overscroll-contain
-                px-[10px]
-                sm:px-[25px]
-                pt-[15px]
-                pb-[20px]
-                flex
-                flex-col
-                gap-[12px]
-                bg-slate-100
-                scroll-smooth
-              "
-            >
-
-              {messages?.length > 0 ? (
-                messages.map((mess) => {
-
-                  return mess.sender ===
-                    userData?._id ? (
-                    <SenderMessage
-                      key={mess._id}
-                      image={mess.image}
-                      message={
-                        mess.message
-                      }
-                    />
-                  ) : (
-                    <ReceiverMessage
-                      key={mess._id}
-                      image={mess.image}
-                      message={
-                        mess.message
-                      }
-                    />
-                  );
-
-                })
-              ) : (
-
-                <div
-                  className="
-                    flex-1
-                    flex
-                    justify-center
-                    items-center
-                  "
-                >
-                  <div
-                    className="
-                      text-center
-                    "
-                  >
-                    <div
-                      className="
-                        text-[40px]
-                        mb-[10px]
-                      "
-                    >
-                      👋
-                    </div>
-
-                    <h2
-                      className="
-                        text-gray-600
-                        font-semibold
-                        text-[18px]
-                      "
-                    >
-                      Start a conversation
-                    </h2>
-
-                    <p
-                      className="
-                        text-gray-400
-                        text-[14px]
-                        mt-[5px]
-                      "
-                    >
-                      Send a message to{" "}
-                      {
-                        selectedUser?.name ||
-                        selectedUser?.userName
-                      }
-                    </p>
-                  </div>
-                </div>
-
-              )}
-
-            </div>
-          </div>
-
-          {/* ================================================= */}
-          {/* IMAGE PREVIEW */}
-          {/* ================================================= */}
-
-          {frontendImage && (
+          {showPicker && (
             <div
               className="
                 absolute
-                bottom-[90px]
-                right-[15px]
-                sm:right-[20px]
-                z-[60]
+                bottom-[10px]
+                left-[10px]
+                z-[100]
+                shadow-2xl
+                rounded-xl
+                overflow-hidden
               "
             >
-              <img
-                src={frontendImage}
-                alt=""
-                className="
-                  w-[80px]
-                  h-[80px]
-                  object-cover
-                  rounded-xl
-                  shadow-xl
-                  border-2
-                  border-white
-                "
+              <EmojiPicker
+                width={350}
+                height={450}
+                onEmojiClick={onEmojiClick}
               />
             </div>
           )}
 
-          {/* ================================================= */}
-          {/* MESSAGE INPUT - ONLY ONE */}
-          {/* ================================================= */}
+          {/* SCROLLABLE MESSAGES */}
 
           <div
             className="
               w-full
-              h-[80px]
-              min-h-[80px]
-              shrink-0
-              bg-white
-              border-t
-              border-gray-200
+              h-full
+              overflow-y-auto
+              overscroll-contain
+              px-[10px]
+              sm:px-[25px]
+              pt-[15px]
+              pb-[15px]
               flex
-              items-center
-              px-[5px]
-              sm:px-[20px]
-              z-[50]
+              flex-col
+              gap-[12px]
+              bg-slate-100
+              scroll-smooth
             "
           >
+            {messages?.length > 0 ? (
+              messages.map((mess) => {
+                return mess.sender === userData?._id ? (
+                  <SenderMessage
+                    key={mess._id}
+                    image={mess.image}
+                    message={mess.message}
+                  />
+                ) : (
+                  <ReceiverMessage
+                    key={mess._id}
+                    image={mess.image}
+                    message={mess.message}
+                  />
+                );
+              })
+            ) : (
+              <div className="flex-1 flex justify-center items-center">
+                <div className="text-center">
+                  <div className="text-[40px] mb-[10px]">
+                    👋
+                  </div>
 
-            <form
-              onSubmit={handleSendMessage}
+                  <h2 className="text-gray-600 font-semibold text-[18px]">
+                    Start a conversation
+                  </h2>
+
+                  <p className="text-gray-400 text-[14px] mt-[5px]">
+                    Send a message to{" "}
+                    {selectedUser?.name ||
+                      selectedUser?.userName}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ================= IMAGE PREVIEW ================= */}
+
+        {frontendImage && (
+          <div
+            className="
+              absolute
+              bottom-[90px]
+              right-[15px]
+              sm:right-[20px]
+              z-[60]
+            "
+          >
+            <img
+              src={frontendImage}
+              alt=""
               className="
-                w-full
+                w-[70px]
+                h-[70px]
+                sm:w-[80px]
+                sm:h-[80px]
+                object-cover
+                rounded-xl
+                shadow-xl
+                border-2
+                border-white
+              "
+            />
+          </div>
+        )}
+
+        {/* ================= MESSAGE INPUT ================= */}
+
+        <div
+          className="
+            w-full
+            h-[80px]
+            min-h-[80px]
+            shrink-0
+            bg-white
+            border-t
+            border-gray-200
+            flex
+            items-center
+            px-[5px]
+            sm:px-[20px]
+            z-[50]
+          "
+        >
+          <form
+            onSubmit={handleSendMessage}
+            className="
+              w-full
+              flex
+              items-center
+              gap-[3px]
+              sm:gap-[8px]
+            "
+          >
+            {/* EMOJI BUTTON */}
+
+            <button
+              type="button"
+              onClick={() =>
+                setShowPicker((prev) => !prev)
+              }
+              className="
+                w-[42px]
+                h-[42px]
+                sm:w-[45px]
+                sm:h-[45px]
+                shrink-0
+                rounded-full
                 flex
                 items-center
-                gap-[4px]
-                sm:gap-[8px]
+                justify-center
+                text-gray-600
+                hover:bg-gray-100
+                hover:text-sky-500
+                transition
               "
             >
+              <RiEmojiStickerLine className="w-[23px] h-[23px]" />
+            </button>
 
-              {/* EMOJI BUTTON */}
+            {/* FILE INPUT */}
+
+            <input
+              type="file"
+              ref={image}
+              accept="image/*"
+              hidden
+              onChange={handleImage}
+            />
+
+            {/* INPUT BOX */}
+
+            <div
+              className="
+                flex-1
+                h-[50px]
+                sm:h-[52px]
+                min-w-0
+                bg-gray-100
+                rounded-full
+                flex
+                items-center
+                px-[10px]
+                sm:px-[15px]
+                border
+                border-transparent
+                focus-within:border-sky-300
+                focus-within:bg-white
+                transition
+              "
+            >
+              <input
+                value={input}
+                onChange={(e) =>
+                  setInput(e.target.value)
+                }
+                type="text"
+                placeholder="Type a message..."
+                className="
+                  w-full
+                  min-w-0
+                  h-full
+                  bg-transparent
+                  outline-none
+                  border-none
+                  text-gray-700
+                  text-[15px]
+                  sm:text-[17px]
+                "
+              />
+
+              {/* IMAGE */}
 
               <button
                 type="button"
                 onClick={() =>
-                  setShowPicker(
-                    (prev) => !prev
-                  )
+                  image.current?.click()
                 }
                 className="
-                  w-[42px]
-                  h-[42px]
-                  sm:w-[45px]
-                  sm:h-[45px]
+                  w-[38px]
+                  h-[38px]
                   shrink-0
                   rounded-full
                   flex
                   items-center
                   justify-center
-                  text-gray-600
-                  hover:bg-gray-100
+                  text-gray-500
+                  hover:bg-gray-200
                   hover:text-sky-500
-                  active:scale-95
                   transition
                 "
               >
-                <RiEmojiStickerLine
-                  className="
-                    w-[23px]
-                    h-[23px]
-                  "
-                />
+                <FaImages className="w-[20px] h-[20px]" />
               </button>
+            </div>
 
-              {/* FILE INPUT */}
+            {/* SEND */}
 
-              <input
-                type="file"
-                ref={image}
-                accept="image/*"
-                hidden
-                onChange={handleImage}
-              />
-
-              {/* TEXT INPUT */}
-
-              <div
+            {(input.trim().length > 0 ||
+              backendImage) && (
+              <button
+                type="submit"
                 className="
-                  flex-1
-                  min-w-0
-                  h-[52px]
-                  bg-gray-100
+                  w-[46px]
+                  h-[46px]
+                  sm:w-[50px]
+                  sm:h-[50px]
+                  shrink-0
                   rounded-full
+                  bg-sky-500
                   flex
                   items-center
-                  px-[10px]
-                  sm:px-[15px]
-                  border
-                  border-transparent
-                  focus-within:border-sky-300
-                  focus-within:bg-white
-                  transition
+                  justify-center
+                  text-white
+                  shadow-md
+                  hover:bg-sky-600
+                  active:scale-95
+                  transition-all
                 "
               >
-
-                <input
-                  value={input}
-                  onChange={(e) =>
-                    setInput(e.target.value)
-                  }
-                  type="text"
-                  placeholder="Type a message..."
-                  className="
-                    w-full
-                    min-w-0
-                    h-full
-                    bg-transparent
-                    outline-none
-                    border-none
-                    text-gray-700
-                    text-[14px]
-                    sm:text-[17px]
-                  "
-                />
-
-                {/* IMAGE BUTTON */}
-
-                <button
-                  type="button"
-                  onClick={() =>
-                    image.current?.click()
-                  }
-                  className="
-                    w-[38px]
-                    h-[38px]
-                    shrink-0
-                    rounded-full
-                    flex
-                    items-center
-                    justify-center
-                    text-gray-500
-                    hover:bg-gray-200
-                    hover:text-sky-500
-                    active:scale-95
-                    transition
-                  "
-                >
-                  <FaImages
-                    className="
-                      w-[20px]
-                      h-[20px]
-                    "
-                  />
-                </button>
-              </div>
-
-              {/* SEND BUTTON */}
-
-              {(input.trim().length > 0 ||
-                backendImage) && (
-                <button
-                  type="submit"
-                  className="
-                    w-[45px]
-                    h-[45px]
-                    sm:w-[50px]
-                    sm:h-[50px]
-                    shrink-0
-                    rounded-full
-                    bg-sky-500
-                    flex
-                    items-center
-                    justify-center
-                    text-white
-                    shadow-md
-                    hover:bg-sky-600
-                    active:scale-95
-                    transition-all
-                  "
-                >
-                  <RiSendPlane2Fill
-                    className="
-                      w-[23px]
-                      h-[23px]
-                    "
-                  />
-                </button>
-              )}
-
-            </form>
-          </div>
-
-        </>
-      )}
-
-    </div>
-  );
+                <RiSendPlane2Fill className="w-[23px] h-[23px]" />
+              </button>
+            )}
+          </form>
+        </div>
+      </>
+    )}
+  </div>
+);
+  
 };
 
 export default MessageArea;
