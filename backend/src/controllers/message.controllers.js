@@ -4,60 +4,7 @@ import Message from "../models/message.js";
 import { getReceiverSocketId } from "../socket/socket.js";
 import { io } from "../socket/socket.js";
 
-// export const sendMessage = async (req, res) => {
-//   try {
-//     const sender = req.userId;
-//     // const { receiver } = req.params;
 
-   
-//  // <-- Ye line zaroor honi chahiye
-//  const receiverId = req.params.receiver;
-
-//   //  const receiverId = req.params.receiver;
-
-//     const { message } = req.body;
-//     let image;
-//     if (req.file) {
-//       image = await uploadCloudinary(req.file.path);
-//     }
-
-//     let conversation = await Conversation.findOne({
-//       participants: { $all: [sender, receiverId] },
-//     });
-
-//     const newMessage = await Message.create({
-//       sender: req.userId,
-//       receiver:receiverId,
-//       message,
-//       image,
-//     });
-
-//     if (!conversation) {
-//       conversation = await Conversation.create({
-//         participants: [sender, receiverId],
-//         messages: [newMessage._id],
-//       });
-//     } else {
-//       conversation.messages.push(newMessage._id);
-//       await conversation.save();
-//     }
-
-   
-//  const receiverSocketId = getReceiverSocketId(receiverId);
-// console.log("Receiver ID:", receiverId);
-// console.log("Receiver Socket ID:", receiverSocketId);
-
-// if (receiverSocketId) {
-//    console.log("Emitting newMessage...");
-//     io.to(receiverSocketId).emit("newMessage", newMessage);
-// }
-
-
-//     return res.status(201).json(newMessage);
-//   } catch (error) {
-//     return res.status(500).json({ message: `send Message error ${error}` });
-//   }
-// };
 
 export const sendMessage = async (req, res) => {
   try {
