@@ -13,7 +13,7 @@ const useOtherUsers = () => {
     const fetchUsers = async () => {
       try {
         const result = await axios.get(
-          "http://localhost:3000/api/user/others",
+          "https://chatly-friendly-backend.onrender.com/api/user/others",
           {
             withCredentials: true,
           }
