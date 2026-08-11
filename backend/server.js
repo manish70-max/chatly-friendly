@@ -13,7 +13,7 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 // const  app = express();
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://chatly-friendly.onrender.com",
     credentials:true
 }))
 app.use(express.json())
